@@ -89,6 +89,10 @@
             function PING(){
                 var str = 254;
                 var rate = $('[id=rate]').val();
+                var search_id = document.getElementById('search');
+                search_id.innerHTML = "wait...";
+                $(search_id).prop('disabled',true);
+
                 SendCommand(str,"ping",rate);
 
                 socket.on("search",function(data){
@@ -102,6 +106,8 @@
                         op.text = data.val[i];   //テキスト値
                         document.getElementById("list").appendChild(op);
                     }
+                search_id.innerHTML = "search ID";
+                $(search_id).prop('disabled',false);
                 });
             }
 
@@ -122,8 +128,15 @@
 
             function ALLread(i){
                 var no = $('#csv tbody').children().length;
-
-                if(i == no)return;
+                var allread = document.getElementById('allread');
+                document.getElementById('allread').innerHTML = "wait...";
+                $(allread).prop("disabled",true);
+                
+                if(i == no){
+                    document.getElementById('allread').innerHTML = "current data";
+                    $(allread).prop("disabled",false);
+                    return;
+                }
                 var addr = $('#csv tbody').children('tr:eq('+i+')').attr('id');
                 var str = $('[id=list]').val();
                 var len = $('#csv tbody').children('tr:eq('+i+')').attr('value');
