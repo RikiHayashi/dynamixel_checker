@@ -89,6 +89,11 @@
             function PING(){
                 var str = 254;
                 var rate = $('[id=rate]').val();
+                var search_id = document.getElementById('search');
+
+                search_id.innerHTML = "wait...";
+                $(search_id).prop('disabled',true);
+
                 SendCommand(str,"ping",rate);
 
                 socket.on("search",function(data){
@@ -166,6 +171,10 @@
                     setPOSE(val);
                 });
                 $('input[type=range]').change( function(){
+                    var val = $(this).val();
+                    setPOSE(val);
+                });
+                $('input[type=number]').on('input',function(){
                     var val = $(this).val();
                     setPOSE(val);
                 });
@@ -251,6 +260,10 @@
                         document.getElementById("val").innerHTML = value;
                     }
                     </script> 
+        </p>
+        <p>
+        Change Position:
+            <input type="number" id="number" name="number" min="-256" max="256" value="0" required>
         </p>
         <p>
             Reference Position: <button id="zero">Move</button>
